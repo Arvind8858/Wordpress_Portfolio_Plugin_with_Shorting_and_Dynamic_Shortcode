@@ -9,7 +9,7 @@
    Author URI: http://www.edugorilla.com
    Author Email: maurya.arvind0702@gmail.com
    Plugin URI: http://www.edugorilla.com
-   License: EduDrona Public License v3.0
+   License: EduGorilla Public License v3.0
    License URI: http://www.edugorilla.com
    
 

@@ -8,7 +8,7 @@
  * Plugin URI: http://www.edugorilla.com
  * Text Domain: EduGorilla-Portfolio
  * Domain Path: /languages/
- * License: EduDrona Public License v3.0
+ * License: EduGorilla Public License v3.0
  * License URI: http://www.edugorilla.com
  *
  * @package EduGorilla-Portfolio
@@ -20,7 +20,7 @@ function add_ajax_file(){
 	));
 }	
     add_action('wp_enqueue_scripts','add_ajax_file');
-    function edudrona_assign($atts, $content = null){
+    function EduGorilla_assign($atts, $content = null){
     	extract(shortcode_atts(array(
     'type' => '',
     'category' => '',
@@ -105,7 +105,7 @@ var categoryshort = "<?php echo $category; ?>";
 	    <!-- Footer -->
 	    <?php 
 	    }
-add_shortcode('edugorilla-directory','edudrona_assign');
+add_shortcode('edugorilla-directory','EduGorilla_assign');
 	    ?>
 	    
         
