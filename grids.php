@@ -7,23 +7,17 @@ $page = (!isset($_POST['page']))? 1 : $_POST['page'];
 $prev = ($page - 1);
 $next = ($page + 1);
 $max_results = 12;
-$from = (($page * $max_results) - $max_results) +1;
-$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_status = 'publish' and comment_status = 'open';");
+$from = (($page * $max_results) - $max_results) ;
+$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
 $total_results = $wpdb->num_rows;
+//echo $total_results;
 $total_pages = ceil($total_results / $max_results);
-$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts WHERE post_status = 'publish' and comment_status = 'open' LIMIT $from, $max_results;");
+$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
 foreach($results as $result){
 $id= $result->ID;
-
-/*$resultsshort = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." ;");
-foreach($resultsshort as $resultshort){
-  $short= $result->meta_value;
-  if($short == $type || $short == $category){*/
-
-?>
+  ?>
 			  <div class="col-md-4 col-sm-6">	
-           	<?php echo $typeshort; ?>
-				  <figure>
+           	<figure>
 			    <div class="text-lable">
 				    <center><span><strong><?php echo $result->post_title ?> </strong></span></center>
 				    </div>
@@ -31,7 +25,7 @@ foreach($resultsshort as $resultshort){
                             $results4 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_featured_image' ;");
                             foreach($results4 as $result4){
 						        ?>
-				                    <a id="detail" data-value="<?php  echo $id;  ?>"><img src="<?php echo $result4->meta_value ?>" alt="<?php echo $result->post_title ?>" class="img-responsive"></a>
+				                    <a id="detail" data-value="<?php  echo $id;  ?>"><img src="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg" class="img-responsive"></a>
 				            <?php break;  } ?>
 						                <figcaption>
 						                <center><h3><?php echo $result->post_type ?></h3></center>
@@ -66,8 +60,8 @@ foreach($resultsshort as $resultshort){
 					</figure>
 	        	</div>   
               <?php	        
-                    }//}}
-              ?>
+                   }
+?>
                             </ul>
               				<ul class="pager" style="clear: both;">
              <?php  

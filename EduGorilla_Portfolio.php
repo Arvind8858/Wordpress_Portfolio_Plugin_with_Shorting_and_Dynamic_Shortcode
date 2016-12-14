@@ -31,8 +31,8 @@ function add_ajax_file(){
 ?>
 <script type="text/javascript">
 var plugins_url = "<?php echo plugins_url(); ?>";
-var typeshort = "<?php echo type; ?>";
-var categoryshort = "<?php echo category; ?>";
+var typeshort = "<?php echo $type; ?>";
+var categoryshort = "<?php echo $category; ?>";
 </script>
        
     <!-- Custom CSS -->
@@ -41,6 +41,7 @@ var categoryshort = "<?php echo category; ?>";
     <link href="<?php echo plugins_url('/css',__FILE__);  ?>/custom2.css" rel="stylesheet">
     <script src="<?php echo plugins_url('/js',__FILE__);  ?>/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="<?php echo plugins_url('/js',__FILE__);  ?>/custom.js"></script>
+    
       <div id="portfolio">
        <div class="section">
 	    	<div class="container">
