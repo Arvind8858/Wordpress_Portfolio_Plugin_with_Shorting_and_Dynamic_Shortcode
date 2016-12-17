@@ -11,5 +11,6 @@
    Plugin URI: http://www.edugorilla.com
    License: EduGorilla Public License v3.0
    License URI: http://www.edugorilla.com
+   You need to copy EduGorilla_Portfolio folder copy and paste in your wordpress plugins folder OR simply make its ZIP file and install it directly from wordpress plugin installer.   
    
 
