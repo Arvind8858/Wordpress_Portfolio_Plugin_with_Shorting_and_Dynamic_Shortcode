@@ -21,12 +21,18 @@ $id= $result->ID;
 			    <div class="text-lable">
 				    <center><span><strong><?php echo $result->post_title ?> </strong></span></center>
 				    </div>
-				            <?php  
-                            $results4 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_featured_image' ;");
-                            foreach($results4 as $result4){
-						        ?>
-				                    <a id="detail" data-value="<?php  echo $id;  ?>"><img src="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg" class="img-responsive"></a>
-				            <?php break;  } ?>
+				              
+                   <?php if (has_post_thumbnail( $id ) ): 
+                            $image = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), 'single-post-thumbnail' ); 
+
+                            /*$results4 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_featured_image' ;");
+                            foreach($results4 as $result4){*/
+                     ?>
+				                    <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg" class="img-responsive"></a>
+				            <?php //break;  } 
+                 //echo $image[0]; 
+                   endif; ?>
+
 						                <figcaption>
 						                <center><h3><?php echo $result->post_type ?></h3></center>
 						       <?php  

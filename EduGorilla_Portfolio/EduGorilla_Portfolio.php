@@ -48,6 +48,13 @@ var categoryshort = "<?php echo $category; ?>";
 				<div class="row">
 			<ul class="grid cs-style-2">
 		  <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
+		  <?php //echo esc_url( get_permalink(587) ); ?>
+		  <?php //if (has_post_thumbnail( 587 ) ): ?>
+  <?php //$image = wp_get_attachment_image_src( get_post_thumbnail_id( 587 ), 'single-post-thumbnail' ); ?>
+  <?php //echo $image[0]; ?>
+
+  
+<?php endif; ?>
 		 
 						<ul class="text-center">
 						<li style="width:30%;"><input type='text' id="keyword" placeholder="Enter a Keyword"/></li>

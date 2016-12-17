@@ -109,7 +109,7 @@ jQuery(document).on('click', '#btn_submit', function(){
        
   });  
 
-  jQuery(document).on('click', 'a#detail', function(){  
+  /*jQuery(document).on('click', 'a#detail', function(){  
   var id= $(this).data("value");
    jQuery.ajax({
       type:"POST",
@@ -123,7 +123,7 @@ jQuery(document).on('click', '#btn_submit', function(){
   }   
  });
       
-  }); 
+  }); */
 
   jQuery(document).on('click', 'a#back', function(){  
   
