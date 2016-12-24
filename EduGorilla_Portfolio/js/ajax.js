@@ -36,24 +36,41 @@ jQuery(document).on('keyup','#keyword', function(){
 	if(keyword != "" && location == "" && category == ""){
 	show_data(keyword);
     }
+    else{
+      fetch_data();
+    }
 });
-
-
+/*
+jQuery(document).on('keydown','#keyword', function(){
+  var keyword= $('#keyword').val();
+  var location= $('#location').val();
+  var category= $('#category').val();
+  if(keyword != "" && location == "" && category == ""){
+  show_data(keyword);
+    }
+    else{
+      fetch_data();
+    }
+});
+*/
 jQuery(document).on('click', '#btn_submit', function(){  
 	var keyword= $('#keyword').val();
 	var location= $('#location').val();
-	var category= $('#category').val();
-	  if(keyword != "" || location != "" || category != ""){
+	if(keyword != "" || location != "" ){
       jQuery.ajax({  
                  url:plugins_url+"/EduGorilla_Portfolio/filter.php", 
                  method:"POST",  
-                 data:{keyword:keyword,location:location,category:category,typeshort:typeshort,categoryshort:categoryshort},  
+                 data:{keyword:keyword,location:location,typeshort:typeshort,categoryshort:categoryshort},  
                  dataType:"text",  
                  success:function(data){  
                      $('#live-data').html(data); 
                  }  
             });  
             } 
+
+            if(keyword == "" && location == "" ){
+              fetch_data();
+    }
        
   }); 
   

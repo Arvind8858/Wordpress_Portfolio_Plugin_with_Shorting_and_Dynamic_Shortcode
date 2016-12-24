@@ -50,7 +50,16 @@ $id= $result->ID;
                            $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
                             foreach($results2 as $result2){
                   ?>
-							<span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php echo $result2->meta_value ?> </span><br>
+							<span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php 
+$args = array(
+   'rating' => $result2->meta_value,
+   'type' => 'rating',
+   'number' => 1234,
+);
+wp_star_rating( $args ); 
+
+
+                            ?> </span><br>
 							<?php break; 
 						    } 
                             $results3 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_statistics_post_total_views';");

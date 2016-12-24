@@ -41,6 +41,7 @@ var categoryshort = "<?php echo $category; ?>";
     <link href="<?php echo plugins_url('/css',__FILE__);  ?>/custom2.css" rel="stylesheet">
     <script src="<?php echo plugins_url('/js',__FILE__);  ?>/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     <script src="<?php echo plugins_url('/js',__FILE__);  ?>/custom.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo get_bloginfo('url');?>/wp-includes/css/dashicons.css" />
     
       <div id="portfolio">
        <div class="section">
@@ -53,45 +54,43 @@ var categoryshort = "<?php echo $category; ?>";
   <?php //$image = wp_get_attachment_image_src( get_post_thumbnail_id( 587 ), 'single-post-thumbnail' ); ?>
   <?php //echo $image[0]; ?>
 
+
   
-<?php endif; ?>
-		 
+<?php //endif; ?>
+<?php 
+/*require_once( ABSPATH . 'wp-admin/includes/template.php' );
+$args = array(
+   'rating' => 3.5,
+   'type' => 'rating',
+   'number' => 1234,
+);
+wp_star_rating( $args ); */
+
+
+?>
+
+
 						<ul class="text-center">
-						<li style="width:30%;"><input type='text' id="keyword" placeholder="Enter a Keyword"/></li>
-						<li style="width:20%;"><select id="location">
+						<li style="width:50%;"><input type='text' id="keyword" placeholder="Enter a Keyword"/></li>
+						<li ><select id="location">
 						<option value="">Location</option>
 						<?php
-						$results11 = $wpdb->get_results("SELECT * FROM wp_postmeta WHERE  meta_key = 'listing_locations' GROUP BY meta_value;");
+						$results11 = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."postmeta WHERE  meta_key = 'listing_locations' GROUP BY meta_value;");
                         foreach($results11 as $result11){
                         $location_ser= 	unserialize($result11->meta_value);
                         reset($location_ser);
                         for ($i=0; $i < count(next($location_ser)); $i++){
 
 	                    ?>
-						<option value="<?php echo current($location_ser) ?>"><?php echo current($location_ser) ?></option>
+						<option  value="<?php echo current($location_ser) ?>" ><?php echo current($location_ser) ?></option>
 						<?php 
 						next($location_ser);
                         }
                         reset($location_ser);
 						 } ?>
 						</select></li>
-						<li style="width:20%;"><select id="category">
-						<option value="">Category</option>
-						<?php
-                        $results11 = $wpdb->get_results("SELECT * FROM wp_postmeta WHERE  meta_key = 'listing_listing_category' GROUP BY meta_value;");
-                        foreach($results11 as $result11){
-                        	$category_ser= 	unserialize($result11->meta_value);
-                        reset($category_ser);
-                        for ($i=0; $i < count(next($category_ser)); $i++){
-                    	?>
-						<option value="<?php echo current($category_ser) ?>"><?php echo current($category_ser) ?></option>
-						<?php 
-						next($category_ser);
-                        }
-                        reset($category_ser);
-						 } ?>
-						</select></li>
-							<li><input type="submit" id="btn_submit" value="Submit"></li>
+						
+							<li><input type="submit" id="btn_submit" value="Filter"></li>
 							</ul>
 					</div>
 

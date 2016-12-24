@@ -1,6 +1,13 @@
 <?php  
 require_once('../../../wp-load.php');
+require_once( ABSPATH . 'wp-admin/includes/template.php' );
 global $wpdb;
+/*$sql="INSERT INTO wp_posts (post_author,post_date,post_date_gmt,post_content,post_title,post_excerpt,post_status,comment_status,ping_status,post_password,post_name,to_ping,pinged,post_modified,post_modified_gmt,post_content_filtered,post_parent,guid,menu_order,post_type,post_mime_type,comment_count) SELECT post_author,post_date,post_date_gmt,post_content,post_title,post_excerpt,post_status,comment_status,ping_status,post_password,post_name,to_ping,pinged,post_modified,post_modified_gmt,post_content_filtered,post_parent,guid,menu_order,post_type,post_mime_type,comment_count FROM wp_2_posts GROUP BY post_title ";
+$wpdb->query($sql);
+$wpdb->get_results("SELECT * FROM wp_posts");
+
+  echo  $rowcount = $wpdb->num_rows;*/
+
 $typeshort = $_POST['typeshort'];
 $categoryshort = $_POST['categoryshort'];
 $page = (!isset($_POST['page']))? 1 : $_POST['page']; 
@@ -52,7 +59,16 @@ $id= $result->ID;
 							             $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
                             foreach($results2 as $result2){
 						      ?>
-							             <span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php echo $result2->meta_value ?> </span><br>
+							             <span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php 
+$args = array(
+   'rating' => $result2->meta_value,
+   'type' => 'rating',
+   'number' => 1234,
+);
+wp_star_rating( $args ); 
+
+
+                            ?> </span><br>
 							    <?php break; 
 						            } 
                             $results3 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_statistics_post_total_views';");

@@ -2,7 +2,6 @@
 require_once('../../../wp-load.php');
 $keyword=$_POST["keyword"];
 $location=$_POST["location"];
-$category=$_POST["category"];
 $typeshort = $_POST['typeshort'];
 $categoryshort = $_POST['categoryshort'];
 global $wpdb;
@@ -11,17 +10,18 @@ $prev = ($page - 1);
 $next = ($page + 1);
 $max_results = 12;
 $from = (($page * $max_results) - $max_results) ;
-$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
 $total_results = $wpdb->num_rows;
+//echo $total_results;
 $total_pages = ceil($total_results / $max_results);
-$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
 foreach($results as $result){
 $id= $result->ID;
-$resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." GROUP BY meta_value ;");
+/*$resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." GROUP BY meta_value ;");
                             foreach($resultscheck as $resultcheck){
                             	$check= $resultcheck->meta_value;
                             	
-                            	if(($check == $location || $check == $category || ($check == $location && $check == $category)) && $check != ""){
+                            	if(($check == $location ) && $check != ""){*/
  
 ?>
 			  <div class="col-md-4 col-sm-6">	        	
@@ -50,9 +50,9 @@ $resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."post
                    ?>
                            <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo current($location_array) ?> </span><br>
                    <?php 
-                           next($location_array);
+                           //next($location_array);
                         } 
-                           reset($location_array);
+                          // reset($location_array);
                            break;
                         }
                            $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
@@ -73,7 +73,7 @@ $resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."post
 	        	</div>
               <?php	        
                     }
-                    }}
+                    //}}
               ?>	
 	        		</ul>
               				<ul class="pager" style="clear: both;">
