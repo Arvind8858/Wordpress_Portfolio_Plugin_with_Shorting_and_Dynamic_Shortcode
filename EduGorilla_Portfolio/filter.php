@@ -1,20 +1,36 @@
 <?php  
 require_once('../../../wp-load.php');
+require_once( ABSPATH . 'wp-admin/includes/template.php' );
 $keyword=$_POST["keyword"];
 $location=$_POST["location"];
 $typeshort = $_POST['typeshort'];
 $categoryshort = $_POST['categoryshort'];
+$num_db = $_POST['num_db'];
+$db_id = $_POST['db_id'];
+$db_prefix= explode( ',', $db_id );
 global $wpdb;
 $page = (!isset($_POST['page']))? 1 : $_POST['page']; 
 $prev = ($page - 1);
 $next = ($page + 1);
 $max_results = 12;
 $from = (($page * $max_results) - $max_results) ;
-$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+
+for($i=0;$i<$num_db;$i++){
+$result_page = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
 $total_results = $wpdb->num_rows;
-//echo $total_results;
-$total_pages = ceil($total_results / $max_results);
-$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+$resultcount= $resultcount + $total_results;
+}
+$total_pages = ceil($resultcount / $max_results);
+
+for($i=0;$i<$num_db;$i++){
+
+$from = $from - $resultcount1;
+$results = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+
+$result_page1 = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$keyword."%' or a.post_content like '%".$keyword."%' or a.post_type like '%".$keyword."%') and b.meta_value like '%".$location."%' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+$total_results1 = $wpdb->num_rows;
+$resultcount1= $resultcount1 + $total_results1;
+
 foreach($results as $result){
 $id= $result->ID;
 /*$resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." GROUP BY meta_value ;");
@@ -58,7 +74,16 @@ $id= $result->ID;
                            $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
                             foreach($results2 as $result2){
                   ?>
-							<span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php echo $result2->meta_value ?> </span><br>
+							<span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php 
+$args = array(
+   'rating' => $result2->meta_value,
+   'type' => 'rating',
+   'number' => 1234,
+);
+wp_star_rating( $args ); 
+
+
+                            ?> </span><br>
 							<?php break; 
 						    } 
                             $results3 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_statistics_post_total_views';");
@@ -72,6 +97,7 @@ $id= $result->ID;
 					</figure>
 	        	</div>
               <?php	        
+                    }
                     }
                     //}}
               ?>	

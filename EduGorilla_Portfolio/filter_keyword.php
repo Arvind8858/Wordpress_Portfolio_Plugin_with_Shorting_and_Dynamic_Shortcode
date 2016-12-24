@@ -1,18 +1,35 @@
 <?php  
 require_once('../../../wp-load.php');
+require_once( ABSPATH . 'wp-admin/includes/template.php' );
 $text=$_POST["text"];
 global $wpdb;
 $typeshort = $_POST['typeshort'];
 $categoryshort = $_POST['categoryshort'];
+$num_db = $_POST['num_db'];
+$db_id = $_POST['db_id'];
+$db_prefix= explode( ',', $db_id );
 $page = (!isset($_POST['page']))? 1 : $_POST['page']; 
 $prev = ($page - 1);
 $next = ($page + 1);
 $max_results = 12;
-$from = (($page * $max_results) - $max_results) +1;
-$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+$from = (($page * $max_results) - $max_results);
+for($i=0;$i<$num_db;$i++){
+$result_page = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
 $total_results = $wpdb->num_rows;
-$total_pages = ceil($total_results / $max_results);
-$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+$resultcount= $resultcount + $total_results;
+}
+echo $resultcount;
+$total_pages = ceil($resultcount / $max_results);
+
+for($i=0;$i<$num_db;$i++){
+
+$from = $from - $resultcount1;
+$results = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+
+$result_page1 = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+$total_results1 = $wpdb->num_rows;
+$resultcount1= $resultcount1 + $total_results1;
+
 foreach($results as $result){
 $id= $result->ID;
 ?>
@@ -73,6 +90,7 @@ wp_star_rating( $args );
 					</figure>
 	        	</div>
               <?php	        
+                    }
                     }
               ?>	
 	        		</ul>

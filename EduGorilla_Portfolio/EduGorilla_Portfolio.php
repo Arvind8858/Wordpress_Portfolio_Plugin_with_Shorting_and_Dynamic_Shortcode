@@ -24,6 +24,8 @@ function add_ajax_file(){
     	extract(shortcode_atts(array(
     'type' => '',
     'category' => '',
+    'childsite_num' => '',
+    'db_prefix' => '',
     
 ), $atts));
     global $wpdb;
@@ -33,6 +35,8 @@ function add_ajax_file(){
 var plugins_url = "<?php echo plugins_url(); ?>";
 var typeshort = "<?php echo $type; ?>";
 var categoryshort = "<?php echo $category; ?>";
+var num_db = "<?php echo $childsite_num; ?>";
+var db_id = "<?php echo $db_prefix; ?>";
 </script>
        
     <!-- Custom CSS -->
@@ -66,6 +70,17 @@ $args = array(
 );
 wp_star_rating( $args ); */
 
+/*$user_ids = explode(",", $href[3] );
+
+    $videos = array();
+    foreach ($user_ids as $id) {
+        $videos[] = get_video_vote_by_uid($id); // Assuming you have a function like this
+    }
+
+    return implode("\n\n", $videos);*/
+
+//$abc= explode( ',', $href );
+//echo $abc[1];
 
 ?>
 

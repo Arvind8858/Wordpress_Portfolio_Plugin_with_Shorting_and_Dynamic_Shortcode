@@ -1,11 +1,11 @@
 jQuery(document).ready(function($){
  
 function fetch_data(){
-  //alert(typeshort);
+  //alert(db_id);
    jQuery.ajax({
 			type:"POST",
   url: plugins_url+"/EduGorilla_Portfolio/grids.php",
-  data:{typeshort:typeshort,categoryshort:categoryshort},
+  data:{typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},
   success:function(data){
   $('#live-data').html(data);
   },
@@ -19,7 +19,7 @@ function show_data(text){
 	jQuery.ajax({
 		url:plugins_url+"/EduGorilla_Portfolio/filter_keyword.php",
 		method:"POST",				
-		data:{text:text,typeshort:typeshort,categoryshort:categoryshort},
+		data:{text:text,typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},
 		
 		success:function(data){
 			$('#live-data').html(data);
@@ -32,8 +32,7 @@ function show_data(text){
 jQuery(document).on('keyup','#keyword', function(){
 	var keyword= $('#keyword').val();
 	var location= $('#location').val();
-	var category= $('#category').val();
-	if(keyword != "" && location == "" && category == ""){
+	if(keyword != "" && location == ""){
 	show_data(keyword);
     }
     else{
@@ -60,7 +59,7 @@ jQuery(document).on('click', '#btn_submit', function(){
       jQuery.ajax({  
                  url:plugins_url+"/EduGorilla_Portfolio/filter.php", 
                  method:"POST",  
-                 data:{keyword:keyword,location:location,typeshort:typeshort,categoryshort:categoryshort},  
+                 data:{keyword:keyword,location:location,typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},  
                  dataType:"text",  
                  success:function(data){  
                      $('#live-data').html(data); 
@@ -79,7 +78,7 @@ jQuery(document).on('click', '#btn_submit', function(){
 	jQuery.ajax({
 			type:"POST",
   url: plugins_url+"/EduGorilla_Portfolio/grids.php",
-  data:{page:page,typeshort:typeshort,categoryshort:categoryshort},
+  data:{page:page,typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},
   success:function(data){
   $('#live-data').html(data);
   },
@@ -96,7 +95,7 @@ jQuery(document).on('click', '#btn_submit', function(){
 	jQuery.ajax({
 			type:"POST",
   url: plugins_url+"/EduGorilla_Portfolio/filter_keyword.php",
-  data:{page:page,text:text,typeshort:typeshort,categoryshort:categoryshort},
+  data:{page:page,text:text,typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},
   success:function(data){
   $('#live-data').html(data);
   },
@@ -115,7 +114,7 @@ jQuery(document).on('click', '#btn_submit', function(){
 	jQuery.ajax({
 			type:"POST",
   url: plugins_url+"/EduGorilla_Portfolio/filter.php",
-  data:{page:page,keyword:keyword,location:location,catagory:catagory,typeshort:typeshort,categoryshort:categoryshort},
+  data:{page:page,keyword:keyword,location:location,catagory:catagory,typeshort:typeshort,categoryshort:categoryshort,num_db:num_db,db_id:db_id},
   success:function(data){
   $('#live-data').html(data);
   },

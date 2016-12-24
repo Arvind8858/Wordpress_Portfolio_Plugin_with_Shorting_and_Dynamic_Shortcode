@@ -10,16 +10,37 @@ $wpdb->get_results("SELECT * FROM wp_posts");
 
 $typeshort = $_POST['typeshort'];
 $categoryshort = $_POST['categoryshort'];
+$num_db = $_POST['num_db'];
+$db_id = $_POST['db_id'];
+$db_prefix= explode( ',', $db_id );
+//echo $db_prefix[0];
 $page = (!isset($_POST['page']))? 1 : $_POST['page']; 
 $prev = ($page - 1);
 $next = ($page + 1);
 $max_results = 12;
 $from = (($page * $max_results) - $max_results) ;
-$result_page = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+for($i=0;$i<$num_db;$i++){
+$result_page = $wpdb->get_results("SELECT *, FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+
 $total_results = $wpdb->num_rows;
+$resultcount= $resultcount + $total_results;
+}
+//echo $resultcount;
+
 //echo $total_results;
-$total_pages = ceil($total_results / $max_results);
-$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts a INNER JOIN ".$wpdb->prefix."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+$total_pages = ceil($resultcount / $max_results);
+
+for($i=0;$i<$num_db;$i++){
+
+$from = $from - $resultcount1;
+
+$results = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
+
+$result_page1 = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
+
+$total_results1 = $wpdb->num_rows;
+$resultcount1= $resultcount1 + $total_results1;
+
 foreach($results as $result){
 $id= $result->ID;
   ?>
@@ -83,6 +104,7 @@ wp_star_rating( $args );
 	        	</div>   
               <?php	        
                    }
+                   }
 ?>
                             </ul>
               				<ul class="pager" style="clear: both;">
@@ -90,7 +112,7 @@ wp_star_rating( $args );
                   if($page > 1)
                     {
              ?>
-                            <li><a id="page" value="<?php echo $prev; ?>">Previous</a></li>
+                            <li><a id="page" data-value="<?php echo $prev; ?>">Previous</a></li>
             <?php
                     }
                   for($i = $page + 1; $i <= min($page + 11, $total_pages); $i++)
@@ -109,7 +131,7 @@ wp_star_rating( $args );
                   if($page < $total_pages)
                     {
 	       ?>
-                            <li><a id="page" value="<?php echo $next; ?>">Next</a></li>
+                            <li><a id="page" data-value="<?php echo $next; ?>">Next</a></li>
 
            <?php
                     }
