@@ -18,20 +18,16 @@ $result_page = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER
 $total_results = $wpdb->num_rows;
 $resultcount= $resultcount + $total_results;
 }
-echo $resultcount;
+//echo $resultcount;
 $total_pages = ceil($resultcount / $max_results);
-
 for($i=0;$i<$num_db;$i++){
-
 $from = $from - $resultcount1;
 $results = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id LIMIT $from, $max_results ;");
-
 $result_page1 = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER JOIN ".$db_prefix[$i]."postmeta b ON a.ID = b.post_id WHERE a.post_status = 'publish' and a.comment_status = 'open' and ( a.post_title like '%".$text."%' or a.post_content like '%".$text."%' or a.post_type like '%".$text."%') and b.meta_key = 'listing_listing_category' and b.meta_value like '%".$typeshort."%' and b.meta_value like '%".$categoryshort."%' GROUP BY b.post_id;");
 $total_results1 = $wpdb->num_rows;
 $resultcount1= $resultcount1 + $total_results1;
-
 foreach($results as $result){
-$id= $result->ID;
+$id= $result->post_id;
 ?>
 			  <div class="col-md-4 col-sm-6">	        	
 				  <figure>
@@ -41,10 +37,8 @@ $id= $result->ID;
 				            <?php if (has_post_thumbnail( $id ) ): 
                             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), 'single-post-thumbnail' ); 
 
-                            /*$results4 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_featured_image' ;");
-                            foreach($results4 as $result4){*/
                      ?>
-                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg" class="img-responsive"></a>
+                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="<?php echo $image[0]; ?>" class="img-responsive"></a>
                     <?php //break;  } 
                  //echo $image[0]; 
                    endif; ?>
@@ -59,9 +53,9 @@ $id= $result->ID;
                    ?>
                            <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo current($location_array) ?> </span><br>
                    <?php 
-                           next($location_array);
+                           //next($location_array);
                         } 
-                           reset($location_array);
+                           //reset($location_array);
                            break;
                         }
                            $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");

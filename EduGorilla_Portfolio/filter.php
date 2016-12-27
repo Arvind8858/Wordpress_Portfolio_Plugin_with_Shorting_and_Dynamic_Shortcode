@@ -20,6 +20,7 @@ $result_page = $wpdb->get_results("SELECT * FROM ".$db_prefix[$i]."posts a INNER
 $total_results = $wpdb->num_rows;
 $resultcount= $resultcount + $total_results;
 }
+echo $resultcount;
 $total_pages = ceil($resultcount / $max_results);
 
 for($i=0;$i<$num_db;$i++){
@@ -32,13 +33,7 @@ $total_results1 = $wpdb->num_rows;
 $resultcount1= $resultcount1 + $total_results1;
 
 foreach($results as $result){
-$id= $result->ID;
-/*$resultscheck = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." GROUP BY meta_value ;");
-                            foreach($resultscheck as $resultcheck){
-                            	$check= $resultcheck->meta_value;
-                            	
-                            	if(($check == $location ) && $check != ""){*/
- 
+$id= $result->post_id;
 ?>
 			  <div class="col-md-4 col-sm-6">	        	
 				  <figure>
@@ -48,10 +43,8 @@ $id= $result->ID;
 				           <?php if (has_post_thumbnail( $id ) ): 
                             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), 'single-post-thumbnail' ); 
 
-                            /*$results4 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_featured_image' ;");
-                            foreach($results4 as $result4){*/
                      ?>
-                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="http://blog.caranddriver.com/wp-content/uploads/2015/11/BMW-2-series.jpg" class="img-responsive"></a>
+                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="<?php echo $image[0]; ?>" class="img-responsive"></a>
                     <?php //break;  } 
                  //echo $image[0]; 
                    endif; ?>  
