@@ -53,38 +53,7 @@ var db_id = "<?php echo $db_prefix; ?>";
 				<div class="row">
 			<ul class="grid cs-style-2">
 		  <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
-		  <?php //echo esc_url( get_permalink(587) ); ?>
-		  <?php //if (has_post_thumbnail( 587 ) ): ?>
-  <?php //$image = wp_get_attachment_image_src( get_post_thumbnail_id( 587 ), 'single-post-thumbnail' ); ?>
-  <?php //echo $image[0]; ?>
-
-
-  
-<?php //endif; ?>
-<?php 
-/*require_once( ABSPATH . 'wp-admin/includes/template.php' );
-$args = array(
-   'rating' => 3.5,
-   'type' => 'rating',
-   'number' => 1234,
-);
-wp_star_rating( $args ); */
-
-/*$user_ids = explode(",", $href[3] );
-
-    $videos = array();
-    foreach ($user_ids as $id) {
-        $videos[] = get_video_vote_by_uid($id); // Assuming you have a function like this
-    }
-
-    return implode("\n\n", $videos);*/
-
-//$abc= explode( ',', $href );
-//echo $abc[1];
-
-?>
-
-
+		  
 						<ul class="text-center">
 						<li style="width:50%;"><input type='text' id="keyword" placeholder="Enter a Keyword"/></li>
 						<li ><select id="location">
@@ -109,14 +78,9 @@ wp_star_rating( $args ); */
 							</ul>
 					</div>
 
-
                    <div  id="live-data"></div>
-                   
+                  </div>
 
-				
-				   </div>
-
-				
 			</div>
 		</div>
 		</div>
