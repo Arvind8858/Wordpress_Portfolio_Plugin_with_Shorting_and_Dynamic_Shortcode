@@ -58,12 +58,12 @@ $id= $result->post_id;
                             for ($i=0; $i < count(next($location_array)); $i++){
 
                    ?>
-                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo current($location_array) ?> </span><br>
+                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;text-transform: capitalize;"><?php echo current($location_array) ?> </span><br>
                    <?php 
                            } 
                            }
                         else{ ?>
-                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo $result1->meta_value; ?> </span><br>
+                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;text-transform: capitalize;"><?php echo $result1->meta_value; ?> </span><br>
 
                        <?php }
                            break;

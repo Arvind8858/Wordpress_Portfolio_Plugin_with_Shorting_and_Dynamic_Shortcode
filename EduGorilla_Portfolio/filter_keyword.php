@@ -38,7 +38,7 @@ $id= $result->post_id;
                             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), 'single-post-thumbnail' ); 
 
                      ?>
-                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="http://www.ford.com/resources/ford/general/newvehicles/Future_Landing_Page/fordGT_large.jpg?v=1451486780000" class="img-responsive"></a>
+                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="<?php echo $image[0]; ?>" class="img-responsive"></a>
                     <?php //break;  } 
                  //echo $image[0]; 
                    endif; ?>
@@ -52,12 +52,12 @@ $id= $result->post_id;
                             for ($i=0; $i < count(next($location_array)); $i++){
 
                    ?>
-                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo current($location_array) ?> </span><br>
+                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;text-transform:capitalize;"><?php echo current($location_array) ?> </span><br>
                    <?php 
                            } 
                            }
                         else{ ?>
-                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo $result1->meta_value; ?> </span><br>
+                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;text-transform:capitalize;"><?php echo $result1->meta_value; ?> </span><br>
 
                        <?php }
                            break;

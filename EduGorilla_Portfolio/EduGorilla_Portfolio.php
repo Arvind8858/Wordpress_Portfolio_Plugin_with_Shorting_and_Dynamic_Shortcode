@@ -66,7 +66,7 @@ var db_id = "<?php echo $db_prefix; ?>";
                         for ($i=0; $i < count(next($location_ser)); $i++){
 
 	                    ?>
-						<option  value="<?php echo current($location_ser) ?>" ><?php echo current($location_ser) ?></option>
+						<option style="text-transform: capitalize;"  value="<?php echo current($location_ser) ?>" ><?php echo current($location_ser) ?></option>
 						<?php 
 						next($location_ser);
                         }
