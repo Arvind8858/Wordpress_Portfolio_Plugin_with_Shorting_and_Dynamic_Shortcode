@@ -38,7 +38,7 @@ $id= $result->post_id;
                             $image = wp_get_attachment_image_src( get_post_thumbnail_id( $id ), 'single-post-thumbnail' ); 
 
                      ?>
-                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="<?php echo $image[0]; ?>" class="img-responsive"></a>
+                            <a id="detail" href="<?php echo esc_url( get_permalink($id) ); ?>"><img src="http://www.ford.com/resources/ford/general/newvehicles/Future_Landing_Page/fordGT_large.jpg?v=1451486780000" class="img-responsive"></a>
                     <?php //break;  } 
                  //echo $image[0]; 
                    endif; ?>
@@ -47,15 +47,19 @@ $id= $result->post_id;
 						   <?php  
                             $results1 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_locations' ;");
                             foreach($results1 as $result1){
-                            $location_array = unserialize($result1->meta_value);
+                              $location_array = unserialize($result1->meta_value);
+                              if (is_array($location_array)){
                             for ($i=0; $i < count(next($location_array)); $i++){
 
                    ?>
                            <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo current($location_array) ?> </span><br>
                    <?php 
-                           //next($location_array);
-                        } 
-                           //reset($location_array);
+                           } 
+                           }
+                        else{ ?>
+                           <span style="float:left;padding-left:20px;">Location : </span><span style="float:right;padding-right:20px;"><?php echo $result1->meta_value; ?> </span><br>
+
+                       <?php }
                            break;
                         }
                            $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
