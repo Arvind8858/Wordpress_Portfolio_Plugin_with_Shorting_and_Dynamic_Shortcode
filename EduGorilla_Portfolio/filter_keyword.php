@@ -45,7 +45,7 @@ $id= $result->post_id;
 						    <figcaption>
 						    <center><h3><?php echo $result->post_type ?></h3></center>
 						   <?php  
-                            $results1 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'listing_locations' ;");
+                            $results1 = $wpdb->get_results("SELECT meta_value FROM ".$db_prefix[$i]."postmeta WHERE post_id = ".$id." and meta_key = 'listing_locations' ;");
                             foreach($results1 as $result1){
                               $location_array = unserialize($result1->meta_value);
                               if (is_array($location_array)){
@@ -62,7 +62,7 @@ $id= $result->post_id;
                        <?php }
                            break;
                         }
-                           $results2 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
+                           $results2 = $wpdb->get_results("SELECT meta_value FROM ".$db_prefix[$i]."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_reviews_post_total_rating';");
                             foreach($results2 as $result2){
                   ?>
 							<span style="float:left;padding-left:20px;">Rating : </span><span style="float:right;padding-right:20px;"><?php 
@@ -77,7 +77,7 @@ wp_star_rating( $args );
                             ?> </span><br>
 							<?php break; 
 						    } 
-                            $results3 = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_statistics_post_total_views';");
+                            $results3 = $wpdb->get_results("SELECT meta_value FROM ".$db_prefix[$i]."postmeta WHERE post_id = ".$id." and meta_key = 'inventor_statistics_post_total_views';");
                             foreach($results3 as $result3){
 						    ?>
 							<span style="float:left;padding-left:20px;">Views : </span><span style="float:right;padding-right:20px;"><?php echo $result3->meta_value ?> </span>
