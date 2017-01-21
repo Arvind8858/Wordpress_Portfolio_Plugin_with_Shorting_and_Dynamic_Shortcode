@@ -53,7 +53,40 @@ var db_id = "<?php echo $db_prefix; ?>";
 				<div class="row">
 			<ul class="grid cs-style-2">
 		  <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
-		  
+		  <?php //echo esc_url( get_permalink(512) ); ?>
+		  <?php /*if (has_post_thumbnail( 512 ) ): 
+                            $image = wp_get_attachment_image_src( get_post_thumbnail_id( 512 ), 'single-post-thumbnail' ); 
+echo $image[0]; 
+endif; */
+ //echo str_replace( home_url(), '', get_permalink(512) );
+ //echo get_current_site(); 
+ //echo unserialize($abcd);
+
+                     ?>
+                     <?php
+                     //echo $img_url= plugins_url('/js',__FILE__);
+//$current_site = get_current_site();
+//echo 'You are viewing ' . $current_site->site_name;
+//function get_all_sites() {
+    /*$sites = wp_get_sites();
+    foreach ($sites as $site) {
+        printf( 'Blog %d: %s%s <br/>', $site['blog_id'], $site['domain'], $site['path'] );
+    }   */
+//}
+   /* echo $db_prefix;
+    echo $_SERVER['SERVER_NAME'];*/
+     //echo $permalink =  get_permalink(512);
+/*$xyz= get_site_url();
+    //$permalink = get_permalink();
+$find = array( $xyz);
+$replace = '';
+$output = str_replace( $find, $replace, $permalink );
+echo '<p>' . $output . '</p>';*/
+
+?>
+<?php //echo get_post_type_archive_link( car ); ?>
+
+                     
 						<ul class="text-center">
 						<li style="width:50%;"><input type='text' id="keyword" placeholder="Enter a Keyword"/></li>
 						<li ><select id="location">
